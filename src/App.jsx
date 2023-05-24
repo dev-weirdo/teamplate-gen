@@ -207,8 +207,8 @@ Language.......: ${langArr[3].map((sLang, index) =>
   }
   return (
     <>
-      <div>
-        <h1>
+      <div className='bg-[#212328] font-consolas text-white flex flex-col items-center justify-center gap-5 p-5'>
+        <h1 className='text-3xl'>
           <span style={{ color: '#205f90' }}>e</span>
           <span style={{ color: '#216894' }}>X</span>
           <span style={{ color: '#237197' }}>t</span>
@@ -242,24 +242,83 @@ Language.......: ${langArr[3].map((sLang, index) =>
           <span style={{ color: '#205f90' }}>r</span>
         </h1>
         <input
+          className='bg-[#2C3E50] text-center border border-white px-2 py-3'
           type='text'
           id='username'
-          defaultValue={localStorage.getItem('username')}
+          defaultValue={
+            localStorage.getItem('username')
+              ? localStorage.getItem('username')
+              : 'Put TBD Username here'
+          }
         />
-        <button onClick={setUsername}>
+        <button
+          onClick={setUsername}
+          className='border p-1 border-[#01579b] text-lg'
+        >
           {localStorage.getItem('username')
             ? 'Update Username'
             : 'Set Username'}
         </button>
-        <textarea name='inputbox' id='ibox' cols='90' rows='30'></textarea>
-        <button onClick={generate}>Generate</button>
+        <textarea
+          className='bg-[#2C3E50] p-5'
+          name='inputbox'
+          id='ibox'
+          cols='150'
+          rows='20'
+        ></textarea>
+        <button
+          className='border p-1 border-[#01579b] text-lg'
+          onClick={generate}
+        >
+          Generate
+        </button>
         <textarea
           name='outputbox'
           id='obox'
-          cols='90'
-          rows='30'
-          readOnly
+          cols='150'
+          rows='20'
+          className='bg-[#2C3E50] p-5'
         ></textarea>
+
+        <footer>
+          <p>
+            <span style={{ color: '#205f90' }}>&#169;</span>
+            <span style={{ color: '#216793' }}>{year}</span>
+            <span style={{ color: '#226e96' }}> </span>
+            <span style={{ color: '#237699' }}>S</span>
+            <span style={{ color: '#257e9c' }}>I</span>
+            <span style={{ color: '#26869f' }}>U</span>
+            <span style={{ color: '#278da2' }}>U</span>
+            <span style={{ color: '#2895a5' }}>U</span>
+            <span style={{ color: '#339caa' }}>@</span>
+            <span style={{ color: '#3fa3af' }}>e</span>
+            <span style={{ color: '#4aaab4' }}>X</span>
+            <span style={{ color: '#55b2b8' }}>t</span>
+            <span style={{ color: '#60b9bd' }}>e</span>
+            <span style={{ color: '#6cc0c2' }}>r</span>
+            <span style={{ color: '#77c7c7' }}>m</span>
+            <span style={{ color: '#7ec7c6' }}>i</span>
+            <span style={{ color: '#84c8c4' }}>n</span>
+            <span style={{ color: '#8bc8c3' }}>a</span>
+            <span style={{ color: '#92c8c1' }}>t</span>
+            <span style={{ color: '#98c9c0' }}>o</span>
+            <span style={{ color: '#9fc9be' }}>r</span>
+            <span style={{ color: '#8ec2ba' }}>.</span>
+            <span style={{ color: '#7dbab7' }}> </span>
+            <span style={{ color: '#6cb3b3' }}>M</span>
+            <span style={{ color: '#5babb0' }}>a</span>
+            <span style={{ color: '#4aa4ac' }}>d</span>
+            <span style={{ color: '#399ca9' }}>e</span>
+            <span style={{ color: '#2895a5' }}> </span>
+            <span style={{ color: '#278da2' }}>w</span>
+            <span style={{ color: '#26869f' }}>i</span>
+            <span style={{ color: '#257e9c' }}>t</span>
+            <span style={{ color: '#237699' }}>h</span>
+            <span style={{ color: '#226e96' }}> </span>
+            <span style={{ color: '#216793' }}>&#x2764;</span>
+            <span style={{ color: '#205f90' }}>.</span>
+          </p>
+        </footer>
       </div>
     </>
   )
