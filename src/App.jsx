@@ -5,6 +5,10 @@ function App () {
   const userName = 'SIUUU'
   let allInfo = ''
   const langArr = []
+  langArr[0] = new Array()
+  langArr[1] = new Array()
+  langArr[2] = new Array()
+  langArr[3] = new Array()
 
   const getLanguage = fLang => {
     const fullLang = new Intl.DisplayNames(['en'], { type: 'language' })
@@ -37,11 +41,14 @@ function App () {
   const dateStr = date + '/' + month + '/' + year
 
   let mainArrLength = 0
+  let chapter = true
 
   mediaInfo.map(info => {
     if (info['@type'] === 'Menu') {
+      chapter = true
       mainArrLength = mediaInfo.length - 2
     } else {
+      chapter = false
       mainArrLength = mediaInfo.length - 1
     }
   })
@@ -115,7 +122,7 @@ Size...........: ${
                 ? fileGibSize.toFixed(2)
                 : fileMibSize
             } ${fileGibSize >= 1 ? 'GiB' : 'MiB'}
-Chapters.......: Yes (Numbered)
+Chapters.......: ${chapter ? 'Yes (Numbered)' : 'No'}
 Remuxer........: [color=#3c758f]${userName}[/color][color=#2683cc]@[/color][color=#3e669c]⋿[/color][color=#3d5692]✗[/color][color=#379ac3]t[/color][color=#389bc7]e[/color][color=#3a9bcb]r[/color][color=#3c9cce]m[/color][color=#3e9dd2]i[/color][color=#409dd6]n[/color][color=#429eda]a[/color][color=#439fdd]t[/color][color=#459fe1]o[/color][color=#47a0e5]r[/color]
 Release Date...: ${dateStr}[/font][/size]
 `
@@ -167,18 +174,79 @@ Language.......: ${getLanguage(info.Language)}${
           }
 
           if (info['@type'] === 'Text') {
-            langArr[info['@typeorder'] - 1] = `${
-              info.Title
-                ? `${getLanguage(info.Language)} (${info.Title})`
-                : `${getLanguage(info.Language)}`
-            }`
+            if (info.Format === 'PGS') {
+              langArr[0].push(
+                `${
+                  info.Title
+                    ? `${getLanguage(info.Language)} (${info.Title})`
+                    : `${getLanguage(info.Language)}`
+                }`
+              )
+            }
+            if (info.Format === 'UTF-8') {
+              langArr[1].push(
+                `${
+                  info.Title
+                    ? `${getLanguage(info.Language)} (${info.Title})`
+                    : `${getLanguage(info.Language)}`
+                }`
+              )
+            }
+            if (info.Format === 'VobSub') {
+              langArr[2].push(
+                `${
+                  info.Title
+                    ? `${getLanguage(info.Language)} (${info.Title})`
+                    : `${getLanguage(info.Language)}`
+                }`
+              )
+            }
+            if (info.Format === 'ASS') {
+              langArr[3].push(
+                `${
+                  info.Title
+                    ? `${getLanguage(info.Language)} (${info.Title})`
+                    : `${getLanguage(info.Language)}`
+                }`
+              )
+            }
             if (index === mainArrLength) {
-              const subs = `[size=3][font=Consolas][color=#4c838b]S[/color][color=#51898e]u[/color][color=#559091]b[/color][color=#5a9694]t[/color][color=#5f9d98]i[/color][color=#63a39b]t[/color][color=#68a99e]l[/color][color=#6cb0a1]e[/color][color=#71b6a4]s[/color][/size] [color=#4c838b]⋄[/color][/font]
-[size=2][font=Consolas]Format.........: PGS (Original)
-Language.......: ${langArr.map((sLang, index) =>
-                index > 0 ? ' ' + sLang : sLang
-              )}[/font][/size]
-            `
+              const subs = `${`[size=3][font=Consolas][color=#4c838b]S[/color][color=#51898e]u[/color][color=#559091]b[/color][color=#5a9694]t[/color][color=#5f9d98]i[/color][color=#63a39b]t[/color][color=#68a99e]l[/color][color=#6cb0a1]e[/color][color=#71b6a4]s[/color][/size] [color=#4c838b]⋄[/color][/font]
+[size=2][font=Consolas]${
+                langArr[0].length !== 0
+                  ? `Format.........: PGS (Original)
+Language.......: ${langArr[0].map((sLang, index) =>
+                      index > 0 ? ' ' + sLang : sLang
+                    )}\n
+`
+                  : ''
+              }${
+                langArr[1].length !== 0
+                  ? `Format.........: SRT
+Language.......: ${langArr[1].map((sLang, index) =>
+                      index > 0 ? ' ' + sLang : sLang
+                    )}\n
+`
+                  : ''
+              }${
+                langArr[2].length !== 0
+                  ? `Format.........: VobSub (Original)
+Language.......: ${langArr[2].map((sLang, index) =>
+                      index > 0 ? ' ' + sLang : sLang
+                    )}\n
+`
+                  : ''
+              }${
+                langArr[3].length !== 0
+                  ? `Format.........: ASS
+Language.......: ${langArr[3].map((sLang, index) =>
+                      index > 0 ? ' ' + sLang : sLang
+                    )}\n
+`
+                  : ''
+              }
+[/font][/size]
+                          `}`
               allInfo += subs + '\n'
             }
           }
