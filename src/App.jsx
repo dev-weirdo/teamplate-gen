@@ -57,7 +57,6 @@ function App () {
     const getUserJson = document.querySelector('#ibox').value
     const parsedValue = JSON.parse(getUserJson)
     const mediaInfo = parsedValue?.media?.track
-    console.log(mediaInfo)
     //Check if Menu section is available
     mediaInfo.map(info => {
       if (info['@type'] === 'Menu') {
@@ -69,12 +68,16 @@ function App () {
       }
     })
 
+    // ${info.Movie}.${info.FileExtension}
+
     mediaInfo.map((info, index) => {
       if (info['@type'] === 'General') {
         const fileGibSize = info.FileSize / 1073741824
         const fileMibSize = (info.FileSize / 1048576).toFixed()
         const general = `[font=Consolas][size=3][color=#4c838b]G[/color][color=#518a8f]e[/color][color=#579292]n[/color][color=#5c9996]e[/color][color=#61a099]r[/color][color=#66a79d]a[/color][color=#6cafa0]l[/color] [/size] [color=#4c838b]⋄[/color]  [/font]
-[size=2][font=Consolas]Filename.......: ${info.Movie}.${info.FileExtension}
+[size=2][font=Consolas]Filename.......: ${parsedValue.media['@ref']
+          .split('\\')
+          .pop()}
 Container......: ${info.Format}
 Duration.......: ${convertHMS(info.Duration)}
 Size...........: ${
