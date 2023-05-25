@@ -1,7 +1,15 @@
+import { useState } from 'react'
+import './Button.css'
+
 function App () {
+  const [checked, setChecked] = useState(false)
   let allInfo = ''
   let mainArrLength = 0
   let chapter = true
+
+  const handleChecked = () => {
+    setChecked(current => !current)
+  }
 
   //Languages array and divide into category
   const langArr = []
@@ -77,7 +85,9 @@ Size...........: ${
             : fileMibSize
         } ${fileGibSize >= 1 ? 'GiB' : 'MiB'}
 Chapters.......: ${chapter ? 'Yes (Numbered)' : 'No'}
-Remuxer........: [color=#3c758f]${localStorage.getItem(
+${
+  checked ? 'Encoder........' : 'Remuxer........'
+}: [color=#3c758f]${localStorage.getItem(
           'username'
         )}[/color][color=#2683cc]@[/color][color=#3e669c]⋿[/color][color=#3d5692]✗[/color][color=#379ac3]t[/color][color=#389bc7]e[/color][color=#3a9bcb]r[/color][color=#3c9cce]m[/color][color=#3e9dd2]i[/color][color=#409dd6]n[/color][color=#429eda]a[/color][color=#439fdd]t[/color][color=#459fe1]o[/color][color=#47a0e5]r[/color]
 Release Date...: ${dateStr}[/font][/size]
@@ -174,7 +184,7 @@ Language.......: ${langArr[0].map((sLang, index) =>
               : ''
           }${
             langArr[1].length !== 0
-              ? `Format.........: SRT
+              ? `Format.........: UTF-8
 Language.......: ${langArr[1].map((sLang, index) =>
                   index > 0 ? ' ' + sLang : sLang
                 )}\n
@@ -208,7 +218,7 @@ Language.......: ${langArr[3].map((sLang, index) =>
   return (
     <>
       <div className='bg-[#212328] font-consolas text-white flex flex-col items-center justify-center gap-5 p-5'>
-        <h1 className='text-3xl'>
+        <h1 className='text-xl md:text-2xl lg:text-3xl py-12'>
           <span style={{ color: '#205f90' }}>e</span>
           <span style={{ color: '#216894' }}>X</span>
           <span style={{ color: '#237197' }}>t</span>
@@ -242,7 +252,7 @@ Language.......: ${langArr[3].map((sLang, index) =>
           <span style={{ color: '#205f90' }}>r</span>
         </h1>
         <input
-          className='bg-[#2C3E50] text-center border border-white px-2 py-3'
+          className='bg-[#2C3E50] text-center border border-white px-2 py-3 w-80'
           type='text'
           id='username'
           defaultValue={
@@ -251,36 +261,97 @@ Language.......: ${langArr[3].map((sLang, index) =>
               : 'Put TBD Username here'
           }
         />
+
         <button
           onClick={setUsername}
-          className='border p-1 border-[#01579b] text-lg'
+          className='border px-4 py-2 border-[#01579b] text-lg rounded-md'
         >
           {localStorage.getItem('username')
             ? 'Update Username'
             : 'Set Username'}
         </button>
-        <textarea
-          className='bg-[#2C3E50] p-5'
-          name='inputbox'
-          id='ibox'
-          cols='150'
-          rows='20'
-        ></textarea>
+        <div>
+          <div className='flex justify-center items-center'>
+            <div className='toggler'>
+              <input
+                id='toggler-1'
+                name='toggler-1'
+                onChange={handleChecked}
+                type='checkbox'
+                value={checked}
+              />
+              <label htmlFor='toggler-1'>
+                <svg
+                  className='toggler-on'
+                  version='1.1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 130.2 130.2'
+                >
+                  <polyline
+                    className='path check'
+                    points='100.2,40.2 51.5,88.8 29.8,67.5'
+                  ></polyline>
+                </svg>
+                <svg
+                  className='toggler-off'
+                  version='1.1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 130.2 130.2'
+                >
+                  <line
+                    className='path line'
+                    x1='34.4'
+                    y1='34.4'
+                    x2='95.8'
+                    y2='95.8'
+                  ></line>
+                  <line
+                    className='path line'
+                    x1='95.8'
+                    y1='34.4'
+                    x2='34.4'
+                    y2='95.8'
+                  ></line>
+                </svg>
+              </label>
+            </div>
+            <h1 className='text-xl font-semibold tracking-wider'>Encoder</h1>
+          </div>
+          <textarea
+            className='bg-[#2C3E50] p-5 rounded w-full'
+            name='inputbox'
+            id='ibox'
+            cols='130'
+            rows='20'
+            placeholder='Paste your Mediainfo JSON here...'
+          ></textarea>
+        </div>
         <button
-          className='border p-1 border-[#01579b] text-lg'
+          className='border px-4 py-2 border-[#01579b] text-lg rounded-md'
           onClick={generate}
         >
           Generate
         </button>
-        <textarea
-          name='outputbox'
-          id='obox'
-          cols='150'
-          rows='20'
-          className='bg-[#2C3E50] p-5'
-        ></textarea>
+        <div>
+          <h1 className='text-lg md:text-2xl py-3 font-semibold tracking-widest'>
+            <span style={{ color: '#205f90' }}>O</span>
+            <span style={{ color: '#2895a5' }}>u</span>
+            <span style={{ color: '#77c7c7' }}>t</span>
+            <span style={{ color: '#8bc8c3' }}>p</span>
+            <span style={{ color: '#9fc9be' }}>u</span>
+            <span style={{ color: '#2895a5' }}>t</span>
+            <span style={{ color: '#205f90' }}>:</span>
+          </h1>
+          <textarea
+            name='outputbox'
+            id='obox'
+            cols='130'
+            rows='20'
+            className='bg-[#2C3E50] p-5 rounded w-full'
+          ></textarea>
+        </div>
 
-        <footer>
+        <footer className='py-4'>
           <p>
             <span style={{ color: '#205f90' }}>&#169;</span>
             <span style={{ color: '#216793' }}>{year}</span>
@@ -316,7 +387,6 @@ Language.......: ${langArr[3].map((sLang, index) =>
             <span style={{ color: '#237699' }}>h</span>
             <span style={{ color: '#226e96' }}> </span>
             <span style={{ color: '#216793' }}>&#x2764;</span>
-            <span style={{ color: '#205f90' }}>.</span>
           </p>
         </footer>
       </div>
