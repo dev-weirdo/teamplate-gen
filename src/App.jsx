@@ -44,16 +44,18 @@ function App () {
       return minutes + ' min ' + seconds + ' s'
     }
   }
+
   //Get date
   const d = new Date()
   const date = d.getDate()
-  const month = d.getMonth() + 1 // Since getMonth() returns month from 0-11 not 1-12
+  const month = d.getMonth() + 1
   const year = d.getFullYear()
-  const dateStr = date + '/' + month + '/' + year
+  const dateStr = date < 10 ? '0' + date : date
+  const monthStr = month < 10 ? '0' + month : month
+  const fullDateStr = dateStr + '/' + monthStr + '/' + year
 
   //Execute on generate button click
   const generate = () => {
-    document.querySelector('#obox').value = ''
     const getUserJson = document.querySelector('#ibox').value
     const parsedValue = JSON.parse(getUserJson)
     const mediaInfo = parsedValue?.media?.track
@@ -67,8 +69,6 @@ function App () {
         mainArrLength = mediaInfo.length - 1
       }
     })
-
-    // ${info.Movie}.${info.FileExtension}
 
     mediaInfo.map((info, index) => {
       if (info['@type'] === 'General') {
@@ -93,7 +93,7 @@ ${
 }: [color=#3c758f]${localStorage.getItem(
           'username'
         )}[/color][color=#2683cc]@[/color][color=#3e669c]⋿[/color][color=#3d5692]✗[/color][color=#379ac3]t[/color][color=#389bc7]e[/color][color=#3a9bcb]r[/color][color=#3c9cce]m[/color][color=#3e9dd2]i[/color][color=#409dd6]n[/color][color=#429eda]a[/color][color=#439fdd]t[/color][color=#459fe1]o[/color][color=#47a0e5]r[/color]
-Release Date...: ${dateStr}[/font][/size]
+Release Date...: ${fullDateStr}[/font][/size]
     `
         allInfo += general + '\n'
       }
