@@ -258,10 +258,9 @@ Language.......: ${langArr[3].map((sLang, index) =>
           className='bg-[#2C3E50] text-center border border-white px-2 py-3 w-80'
           type='text'
           id='username'
+          placeholder='Put TBD Username here'
           defaultValue={
-            localStorage.getItem('username')
-              ? localStorage.getItem('username')
-              : 'Put TBD Username here'
+            localStorage.getItem('username') && localStorage.getItem('username')
           }
         />
 
